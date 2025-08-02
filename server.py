@@ -76,14 +76,10 @@ async def archive(request):
 
     except (ConnectionResetError, asyncio.CancelledError):
         logger.debug("Загрузка прервана - завершение процесса zip")
-        process.kill()
-        await process.wait()
         raise
 
     except Exception as e:
         logger.error(f"Ошибка при создании архива: {str(e)}")
-        process.kill()
-        await process.wait()
         raise web.HTTPInternalServerError()
 
     finally:
